@@ -30,7 +30,7 @@ namespace FreeCourse.Services.Catalog.Services
 
         public async Task<Response<List<CourseDto>>> GetAllAsync()
         {
-            var courses = await _courseCollecion.Find(course => true).ToListAsync();
+            var courses = await _courseCollection.Find(course => true).ToListAsync();
 
             if(courses.Any())
             {
