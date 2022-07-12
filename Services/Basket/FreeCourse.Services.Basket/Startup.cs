@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,9 @@ namespace FreeCourse.Services.Basket
         public void ConfigureServices(IServiceCollection services)
         {
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            
+            // sub tipini maplemesini engelliyoruz. Bunu yapmazsak sub-> nameidentifier olarak mapleniyor ve bulamiyoruz.
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
