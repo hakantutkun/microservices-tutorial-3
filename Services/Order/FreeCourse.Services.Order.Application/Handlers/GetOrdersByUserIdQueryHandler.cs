@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace FreeCourse.Services.Order.Application.Handlers
 {
-    internal class GetOrdersByUserIdQueryHandler : IRequestHandler<GetOrdersByUserIdQuery, Response<List<OrderDto>>>
+    public class GetOrdersByUserIdQueryHandler : IRequestHandler<GetOrdersByUserIdQuery, Response<List<OrderDto>>>
     {
         private readonly OrderDBContext _context;
 
