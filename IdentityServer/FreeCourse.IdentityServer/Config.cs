@@ -19,6 +19,7 @@ namespace FreeCourse.IdentityServer
             new ApiResource("resource_discount") {Scopes = {"discount_fullpermission"}},
             new ApiResource("resource_order") {Scopes = {"order_fullpermission"}},
             new ApiResource("resource_payment") {Scopes = {"payment_fullpermission"}},
+            new ApiResource("resource_gateway") {Scopes = {"gateway_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
 
@@ -43,6 +44,7 @@ namespace FreeCourse.IdentityServer
                 new ApiScope("discount_fullpermission","Discount API icin full erisim"),
                 new ApiScope("order_fullpermission","Order API icin full erisim"),
                 new ApiScope("payment_fullpermission","Payment API icin full erisim"),
+                new ApiScope("gateway_fullpermission","Gateway API icin full erisim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -55,7 +57,7 @@ namespace FreeCourse.IdentityServer
                     ClientId = "WebMvcClient",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "catalog_fullpermission", "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                    AllowedScopes = { "catalog_fullpermission", "photo_stock_fullpermission", "gateway_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
                 },
                  new Client
                 {
@@ -70,6 +72,7 @@ namespace FreeCourse.IdentityServer
                          "discount_fullpermission",
                          "order_fullpermission",
                          "payment_fullpermission",
+                         "gateway_fullpermission",
                          IdentityServerConstants.StandardScopes.Email,
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
