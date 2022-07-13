@@ -21,7 +21,8 @@ namespace FreeCourse.Services.Order.API.Controllers
             _sharedIdentityService=sharedIdentityService;
         }
 
-        private async Task<IActionResult> GetOrders()
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
         {
             var response = await _mediator.Send(new GetOrdersByUserIdQuery { UserId = _sharedIdentityService.GetUserId });
 
