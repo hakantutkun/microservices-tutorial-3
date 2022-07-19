@@ -59,7 +59,7 @@ namespace FreeCourse.Web.Services
 
             var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
 
-            if(token.IsError)
+            if (token.IsError)
             {
                 return null;
             }
@@ -86,22 +86,46 @@ namespace FreeCourse.Web.Services
 
         }
 
-        public Task RevokeRefreshToken()
+        public async Task RevokeRefreshToken()
         {
-            throw new System.NotImplementedException();
+            // Send a request for discovery endpoint of identity server.
+            var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _serviceApiSettings.BaseUri,
+                Policy = new DiscoveryPolicy { RequireHttps = false }
+            });
+
+            // Check if any error received.
+            if (disco.IsError)
+            {
+                throw disco.Exception;
+            }
+
+            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            TokenRevocationRequest tokenRevocationRequest = new()
+            {
+                ClientId = _clientSettings.WebClientForUser.ClientId,
+                ClientSecret = _clientSettings.WebClientForUser.ClientSecret,
+                Address = disco.RevocationEndpoint,
+                Token = refreshToken,
+                TokenTypeHint = "refresh_token"
+            };
+
+            await _httpClient.RevokeTokenAsync(tokenRevocationRequest);
         }
 
         public async Task<Response<bool>> SignIn(SignInInput signInInput)
         {
             // Send a request for discovery endpoint of identity server.
-            var disco = await _httpClient.GetDiscoveryDocumentAsync( new DiscoveryDocumentRequest
+            var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
                 Address = _serviceApiSettings.BaseUri,
                 Policy = new DiscoveryPolicy { RequireHttps = false }
             });
-            
+
             // Check if any error received.
-            if(disco.IsError)
+            if (disco.IsError)
             {
                 throw disco.Exception;
             }
@@ -120,11 +144,11 @@ namespace FreeCourse.Web.Services
             var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
 
             // Check if token received successfully.
-            if(token.IsError)
+            if (token.IsError)
             {
                 var responseContent = await token.HttpResponse.Content.ReadAsStringAsync();
 
-                var errorDto = JsonSerializer.Deserialize<ErrorDto>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
+                var errorDto = JsonSerializer.Deserialize<ErrorDto>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 return Response<bool>.Fail(errorDto.Errors, 400);
             }
@@ -140,13 +164,13 @@ namespace FreeCourse.Web.Services
             var userInfo = await _httpClient.GetUserInfoAsync(userInfoRequest);
 
             // Check if user info received successfully.
-            if(userInfo.IsError)
+            if (userInfo.IsError)
             {
                 throw userInfo.Exception;
             }
 
             // Create claims identity.
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userInfo.Claims,CookieAuthenticationDefaults.AuthenticationScheme,"name","role");
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userInfo.Claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
 
             // Create principal.
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -160,9 +184,9 @@ namespace FreeCourse.Web.Services
             {
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = token.AccessToken},
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = token.RefreshToken},
-                new AuthenticationToken 
-                { 
-                    Name = OpenIdConnectParameterNames.ExpiresIn, 
+                new AuthenticationToken
+                {
+                    Name = OpenIdConnectParameterNames.ExpiresIn,
                     Value = DateTime.Now.AddSeconds(token.ExpiresIn).ToString("o", CultureInfo.InvariantCulture)
                 }
             });
