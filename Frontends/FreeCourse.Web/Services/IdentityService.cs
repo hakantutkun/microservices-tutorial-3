@@ -37,7 +37,7 @@ namespace FreeCourse.Web.Services
             // Send a request for discovery endpoint of identity server.
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _serviceApiSettings.BaseUri,
+                Address = _serviceApiSettings.IdentityBaseUri,
                 Policy = new DiscoveryPolicy { RequireHttps = false }
             });
 
@@ -91,7 +91,7 @@ namespace FreeCourse.Web.Services
             // Send a request for discovery endpoint of identity server.
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _serviceApiSettings.BaseUri,
+                Address = _serviceApiSettings.IdentityBaseUri,
                 Policy = new DiscoveryPolicy { RequireHttps = false }
             });
 
@@ -120,7 +120,7 @@ namespace FreeCourse.Web.Services
             // Send a request for discovery endpoint of identity server.
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _serviceApiSettings.BaseUri,
+                Address = _serviceApiSettings.IdentityBaseUri,
                 Policy = new DiscoveryPolicy { RequireHttps = false }
             });
 
