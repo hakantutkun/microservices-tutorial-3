@@ -1,11 +1,16 @@
-﻿namespace FreeCourse.Web.Models.Catalogs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FreeCourse.Web.Models.Catalogs
 {
     public class CourseCreateInput
     {
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public decimal Price { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         public string Picture { get; set; }
