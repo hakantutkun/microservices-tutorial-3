@@ -68,7 +68,7 @@ namespace FreeCourse.Services.Catalog.Services
             {
                 foreach (var course in courses)
                 {
-                    course.Category = await _categoryCollection.Find<Category>(i => i.Id == course.CategoryId).FirstAsync();
+                    course.Category = await _categoryCollection.Find<Category>(i => i.Id == course.CategoryId).FirstOrDefaultAsync();
                 }
             }
             else

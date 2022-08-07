@@ -16,7 +16,7 @@
 
                     <div class="mb-3">
                       <label class="form-label" asp-for="CategoryId"></label>
-                      <select class="form-control" asp-items="@ViewBag.categoryList">
+                      <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
                           <option value="">Kategori Seçiniz</option>
                       </select>
                       <span class="text-danger" asp-validation-for="CategoryId"></span>
@@ -24,25 +24,25 @@
 
                     <div class="mb-3">
                       <label class="form-label" asp-for="Name"></label>
-                      <input type="email" asp-for="Name" class="form-control">
+                      <input type="text" asp-for="Name" class="form-control">
                       <span class="text-danger" asp-validation-for="Name"></span>
                     </div>
 
                     <div class="mb-3">
                       <label class="form-label" asp-for="Price"></label>
-                      <input type="email" asp-for="Price" class="form-control">
+                      <input type="text" asp-for="Price" class="form-control">
                       <span class="text-danger" asp-validation-for="Price"></span>
                     </div>
                     
                     <div class="mb-3">
                       <label class="form-label" asp-for="Description"></label>
-                      <textarea type="email" asp-for="Description" class="form-control"></textarea>
+                      <textarea type="text" asp-for="Description" class="form-control"></textarea>
                       <span class="text-danger" asp-validation-for="Description"></span>
                     </div>
 
                     <div class="mb-3">
                       <label class="form-label" asp-for="Feature.Duration"></label>
-                      <input type="email" asp-for="Feature.Duration" class="form-control">
+                      <input type="text" asp-for="Feature.Duration" class="form-control">
                       <span class="text-danger" asp-validation-for="Feature.Duration"></span>
                     </div>
 
