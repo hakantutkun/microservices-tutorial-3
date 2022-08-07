@@ -55,7 +55,7 @@ namespace FreeCourse.Services.Catalog.Services
             {
                 return Response<CourseDto>.Fail("Course not found",404);
             }
-            course.Category = await _categoryCollection.Find<Category>(x => x.Id == course.CategoryId).FirstAsync();
+            course.Category = await _categoryCollection.Find<Category>(x => x.Id == course.CategoryId).FirstOrDefaultAsync();
 
             return Response<CourseDto>.Success(_mapper.Map<CourseDto>(course), 200);
         }
