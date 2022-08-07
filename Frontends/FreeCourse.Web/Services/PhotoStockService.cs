@@ -1,4 +1,5 @@
-﻿using FreeCourse.Web.Models.Catalogs.PhotoStocks;
+﻿using FreeCourse.Shared.Dtos;
+using FreeCourse.Web.Models.Catalogs.PhotoStocks;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -41,14 +42,16 @@ namespace FreeCourse.Web.Services
             var multipartContent = new MultipartFormDataContent();
             multipartContent.Add(new ByteArrayContent(ms.ToArray()), "photo", randomFileName);
 
-            var response = await _httpClient.PostAsync("photo", multipartContent);
+            var response = await _httpClient.PostAsync("photos", multipartContent);
 
-            if(response.IsSuccessStatusCode)
+            if(!response.IsSuccessStatusCode)
             {
                 return null;
             }
 
-            return await response.Content.ReadFromJsonAsync<PhotoViewModel>();
+            var responseSuccess = await response.Content.ReadFromJsonAsync<Response<PhotoViewModel>>();
+
+            return responseSuccess.Data;
         }
     }
 }
