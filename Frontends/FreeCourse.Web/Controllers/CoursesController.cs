@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Shared.Services;
+using FreeCourse.Web.Helpers;
 using FreeCourse.Web.Models.Catalogs;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,7 @@ namespace FreeCourse.Web.Controllers
     {
         private readonly ICatalogService _catalogService;
         private readonly ISharedIdentityService _sharedIdentityService;
+        private readonly PhotoHelper _photoHelper;
 
         public CoursesController(ICatalogService catalogService, ISharedIdentityService sharedIdentityService)
         {
