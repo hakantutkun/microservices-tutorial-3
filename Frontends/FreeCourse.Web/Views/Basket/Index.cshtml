@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 @model BasketViewModel
@@ -9,7 +8,7 @@
         <div class="card-body">
             <h5 class="card-title">Sepet</h5>
 
-            @if(Model != null && Model.BasketItems.Any())
+            @if (Model != null && Model.BasketItems.Any())
             {
                 <table class="table table-striped">
                     <tr>
@@ -18,7 +17,7 @@
                         <th>İşlemler</th>
                     </tr>
 
-                    @foreach(var item in Model.BasketItems)
+                    @foreach (var item in Model.BasketItems)
                     {
                         <tr>
                             <td>@item.CourseName</td>
@@ -33,13 +32,34 @@
                             <th colspan="2">% @Model.DiscountRate.Value</th>
                         </tr>
                     }
-                    
+
                     <tr>
                         <td>@(Model.HasDiscount ? "İndirimli Fiyat" : " Toplam Fiyat")</td>
                         <th colspan="2">@Model.TotalPrice TL</th>
                     </tr>
 
                 </table>
+
+                <form asp-controller="Basket" asp-action="ApplyDiscount">
+                    @if (Model.HasDiscount)
+                    {
+                        <div class="alert alert-success">
+                            "@Model.DiscountCode" indirim kodu uygulandı.
+                        </div>
+                    }
+
+                    @if (TempData["discountStatus"]!= null && (bool)TempData["discountStatus"]== false)
+                    {
+                        <div class="text-danger">indirim kodu geçersiz</div>
+                    }
+
+                    <div class="input-group mb-3">
+                        <input type="text" name="DiscountApplyInput.Code" class="form-control"/>
+                        <div asp-validation-summary="All"></div>
+                        <button class="btn btn-outline-secondary">Uygula</button>
+                    </div>
+                </form>
+
             }
             else
             {
