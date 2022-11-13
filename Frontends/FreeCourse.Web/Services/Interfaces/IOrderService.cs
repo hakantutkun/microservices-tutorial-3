@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Web.Models.Orders;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FreeCourse.Web.Services.Interfaces
@@ -22,6 +23,6 @@ namespace FreeCourse.Web.Services.Interfaces
         /// <returns></returns>
         Task SuspendOrder(CheckoutInfoInput checkoutInfoInput);
 
-        Task GetOrder();
+        Task<List<OrderViewModel>> GetOrder();
     }
 }
