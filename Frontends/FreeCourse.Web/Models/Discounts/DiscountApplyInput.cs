@@ -1,4 +1,4 @@
-﻿namespace FreeCourse.Web.Models.Models
+﻿namespace FreeCourse.Web.Models.Discounts
 {
     public class DiscountApplyInput
     {

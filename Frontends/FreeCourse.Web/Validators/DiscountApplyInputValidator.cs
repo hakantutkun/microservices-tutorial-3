@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using FreeCourse.Web.Models.Models;
+using FreeCourse.Web.Models.Discounts;
 
 namespace FreeCourse.Web.Validators
 {
